@@ -41,6 +41,10 @@ public class impiccato1 {
     	  System.out.print("Inserisci lettera: ");
   		  testo = tastiera.readLine();
   		  try{
+  		    if(testo.equalsIgnoreCase(word)){
+  		      System.out.println("Hai vinto!");
+  		      return;
+  		    }
     		  for(int count = 0; count < parola.length;count++){
     		    tentativi=0;
     		    par = parola[count];
@@ -53,6 +57,7 @@ public class impiccato1 {
     		      System.out.println("\"");
     		      return;
     		    }
+    		    
             else if(testo.charAt(0)==par){
               ver = true;
               tentativi++;
