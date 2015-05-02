@@ -7,7 +7,7 @@ import java.io.*;
 public class impiccatoC{
   public static void impiccato(){
     boolean gameOn=true, retry = false, characterTrue = false, character = true;
-    aCapo();
+    clean();
     while(gameOn){
       InputStreamReader Input = new InputStreamReader (System.in);
     	BufferedReader tastiera = new BufferedReader (Input);
@@ -22,24 +22,27 @@ public class impiccatoC{
     	}
     	catch(NullPointerException e){
     	  System.out.println("How about NO.");
+    	  clean();
     	}
     	String hiddenWord = wordSecret(word.length(), '-');
       int volte = 0, lifes = 7, again = 0, volteTrue = 0, volteWrong = 0;
       String wrongAttempts = "";
+      String rightAttempts = "";
       String wrongAttemptsWrite = "";
-      hangedMan(7-lifes, wrongAttempts, hiddenWord);
+      hangedMan(7-lifes, lifes, wrongAttempts, hiddenWord);
     	String testo ="";
       boolean verify = false;
       int attempts = 0;
     	try{
     	  while(true){
-    	    aCapo();
-    	    hangedMan(7-lifes, wrongAttempts, hiddenWord);
+    	    clean();
+    	    hangedMan(7-lifes, lifes, wrongAttempts, hiddenWord);
     	    if(again == 0){
     	      again = 1;
     	    }
     	    else if(character == false){
     	      System.out.println("Inserire almeno un carattere.");
+    	      character = true;
     	    }
     	    else if(lifes == 0){
     	      System.out.println("Hai perso. La parola da indovinare era: \""+word+"\"");
@@ -49,6 +52,7 @@ public class impiccatoC{
       	    else if(testo.equalsIgnoreCase("Y") || testo.equalsIgnoreCase("yes")){
       	      lifes = 7;
       	      retry = true;
+      	      clean();
       	      break;
       	    }
       	    else{ return;}
@@ -61,11 +65,12 @@ public class impiccatoC{
       	    else if(testo.equalsIgnoreCase("Y") || testo.equalsIgnoreCase("yes")){
       	      lifes = 7;
       	      retry = true;
+      	      clean();
       	      break;
       	    }
-      	    else{ 
-      	      return;
-      	    }
+        	  else{ 
+        	    System.out.println("Inserisci un carattere valido."); 
+        	  }
     	    }
     	    else if(characterTrue == true){
     	      System.out.println("Hai già inserito questa lettera.");
@@ -75,9 +80,8 @@ public class impiccatoC{
     	      System.out.println("Lettera corretta: \""+testo.charAt(0)+"\"");
     	    }
     	    else if(verify == false){
-    	      System.out.println("Lettera scorretta: \""+testo.charAt(0)+"\"\nTi rimangono: "+lifes+" tentativi.");
+    	      System.out.println("Lettera scorretta: \""+testo.charAt(0)+"\"");
     	    }
-    	    //System.out.println("Parola attuale: "+hiddenWord);
     	    System.out.print("Inserisci lettera: ");
     	    testo = tastiera.readLine();
     	    if(testo.length()==0 )character = false;
@@ -89,31 +93,48 @@ public class impiccatoC{
       	    else if(testo.equalsIgnoreCase("Y") || testo.equalsIgnoreCase("yes")){
       	      lifes = 7;
       	      retry = true;
+      	      clean();
       	      break;
       	    }
         	  else{ 
-        	    return;
+        	    System.out.println("Inserisci un carattere valido."); 
         	  }
     	    }
-    	    aCapo();
+    	    clean();
           volte = 0;
     	    try{
-    	      for(int count = 0; count < word.length(); count++){
-    	        if(testo.charAt(0)==word.charAt(count)){
-    	          hiddenWord = newSecret(hiddenWord,count, word.charAt(count));
-                verify = true;
+    	       for(int count = 0; count < rightAttempts.length(); count++ ){
+    	         if(rightAttempts.charAt(count)==testo.charAt(0)){
+    	           characterTrue=true;
+    	           break;
+    	         }
+    	       }
+    	       for(int count1=0; count1 < wrongAttemptsWrite.length(); count1++ ){
+    	        if(wrongAttemptsWrite.charAt(count1)==testo.charAt(0) ){
+    	          characterTrue=true;
+    	          break;
     	        }
-    	        else{
-    	          volte++;
-    	          if(volte==word.length() && characterTrue==false){
-    	            lifes--;
-    	            verify = false;
-    	            wrongAttempts +="\""+testo.charAt(0)+"\" ";
-    	            wrongAttemptsWrite +=testo.charAt(0);
-    	            attempts++;
-    	          }
+    	       }
+    	        
+    	        if(characterTrue == false){
+        	      for(int count = 0; count < word.length(); count++){
+        	        if(testo.charAt(0)==word.charAt(count)){
+        	          hiddenWord = newSecret(hiddenWord,count, word.charAt(count));
+                    verify = true;
+                    rightAttempts+=testo.charAt(0);
+        	        }
+        	        else{
+        	          volte++;
+        	          if(volte==word.length() && characterTrue==false){
+        	            lifes--;
+        	            verify = false;
+        	            wrongAttempts +="\""+testo.charAt(0)+"\" ";
+        	            wrongAttemptsWrite +=testo.charAt(0);
+        	            attempts++;
+        	          }
+        	        }
+        	      }
     	        }
-    	      }
     	    }
     	    catch(NumberFormatException e){
     	    }
@@ -125,6 +146,7 @@ public class impiccatoC{
     	}
     	catch(NullPointerException e){
     	  System.out.println("How about NO.");
+    	  clean();
     	}
     	catch(IndexOutOfBoundsException e){
     	}
@@ -149,18 +171,18 @@ public class impiccatoC{
     }
     return newHidden;
   }
-  public static void aCapo(){
+  public static void clean(){
     for(int count = 0; count < 123; count++){
       System.out.println("");
     }
   }
-  public static void hangedMan(int errors, String error, String testo){
+  public static void hangedMan(int errors,int attempts, String error, String testo){
     String a ="╔═════════════════════════════════════════════════════════════════════╗";
     String b ="║                                                                     ║";
     //String b1 ="║Impiccato creato da: Samuel e Alessandro                             ║";
     String b1 ="║Lettere sbagliate: "+error;
-    String c1 ="║Parola attuale:"+testo;
-    String d1 ="║                                                                     ║";
+    String c1 ="║Parola attuale: "+testo;
+    String d1 ="║Vite: "+attempts;
     String e1 ="║        ╔════╦════════╗                                              ║";
     String f1 ="║        ╠════╝        ☺                                              ║";
     String g1 ="║        ║            ╔╬╗                                             ║";
@@ -184,12 +206,18 @@ public class impiccatoC{
       if(count == spaceAtt-1)c1+="║";
       else c1+=" ";
     }
+    int spaceTenta = 71-d1.length();
+    for(int count = 0; count < spaceTenta; count++){
+      if(count == spaceTenta-1)d1+="║";
+      else d1+=" ";
+    }
     if(errors==0){
       System.out.println(owner);
       System.out.println(a);
       System.out.println(b1);
       System.out.println(c1);
-      for(int count = 0; count < 15; count++){
+      System.out.println(d1);
+      for(int count = 0; count < 14; count++){
         System.out.println(b);
       }
       System.out.println(r);
@@ -199,7 +227,8 @@ public class impiccatoC{
       System.out.println(a);
       System.out.println(b1);
       System.out.println(c1);
-      for(int count = 0; count < 14; count ++){
+      System.out.println(d1);
+      for(int count = 0; count < 13; count ++){
         System.out.println(b);
       }
       System.out.println(q1);
@@ -210,7 +239,8 @@ public class impiccatoC{
       System.out.println(a);
       System.out.println(b1);
       System.out.println(c1);
-      for(int count = 0; count < 4; count ++){
+      System.out.println(d1);
+      for(int count = 0; count < 3; count ++){
         System.out.println(b);
       }
       for(int count1 = 0; count1 < 9; count1 ++){
@@ -224,7 +254,8 @@ public class impiccatoC{
       System.out.println(a);
       System.out.println(b1);
       System.out.println(c1);
-      for(int count = 0; count < 3; count ++){
+      System.out.println(d1);
+      for(int count = 0; count < 2; count ++){
         System.out.println(b);
       }
       System.out.println(e1);
@@ -239,7 +270,8 @@ public class impiccatoC{
       System.out.println(a);
       System.out.println(b1);
       System.out.println(c1);
-      for(int count = 0; count < 3; count ++){
+      System.out.println(d1);
+      for(int count = 0; count < 2; count ++){
         System.out.println(b);
       }
       System.out.println(e1);
@@ -255,7 +287,8 @@ public class impiccatoC{
       System.out.println(a);
       System.out.println(b1);
       System.out.println(c1);
-      for(int count = 0; count < 3; count ++){
+      System.out.println(d1);
+      for(int count = 0; count < 2; count ++){
         System.out.println(b);
       }
       System.out.println(e1);
@@ -272,7 +305,8 @@ public class impiccatoC{
             System.out.println(a);
             System.out.println(b1);
             System.out.println(c1);
-      for(int count = 0; count < 3; count ++){
+            System.out.println(d1);
+      for(int count = 0; count < 2; count ++){
         System.out.println(b);
       }
       System.out.println(e1);
@@ -290,7 +324,8 @@ public class impiccatoC{
       System.out.println(a);
       System.out.println(b1);
       System.out.println(c1);
-      for(int count = 0; count < 3; count ++){
+      System.out.println(d1);
+      for(int count = 0; count < 2; count ++){
         System.out.println(b);
       }
       System.out.println(e1);
@@ -306,30 +341,54 @@ public class impiccatoC{
       System.out.println(r);      
     }
   }
-  public static void errors(String errors, int error){
-    String a = "╔════════╗";
-    String b = "║ Errori ║";
-    String c = "╠════════╣";
-    String d = "║ "+errors+"      ║";
-    String e = "╚════════╝";
-    for(int count = 0; count <= error; count++){
-      if(count == 0){
-        if(error == 0){
-          System.out.print(a+"\n"+b+"\n"+e+"\n");
-        }
-        else{
-          System.out.print(a+"\n"+b+"\n");
+  /**
+   * Crea una tabella con gli errori fatti.
+   * @param String errori, 
+   */
+    public static void errors(String errors, int error){
+      char f = ' ';
+      String a = "╔════════╗";
+      String b = "║ Errori ║";
+      String c = "╠════════╣";
+      String d = "║";
+      String e = "╚════════╝";
+      
+      if(error == 0){
+       System.out.print(a+"\n"+b+"\n"+e+"\n"); 
+      }
+      else if(error > 0){ 
+        System.out.print(a+"\n"+b+"\n");
+        for(int count = 0; count < error; count++){
+          f = errors.charAt(count);
+          if(count == error-1){
+            d+=count+1+".) "+f;
+            int spaceErr = 10-d.length();
+            for(int count1 = 0; count1 <= spaceErr; count1++){
+              if(count1 == spaceErr-1)d+="║";
+              else d+=" ";
+            }
+            System.out.print(c+"\n"+d+"\n"+e+"\n");
+            
+          }
+          else if(count < error){
+            d+=count+1+".) "+f;
+            int spaceErr = 10-d.length();
+            for(int count1 = 0; count1 <= spaceErr; count1++){
+              if(count1 == spaceErr-1)d+="║";
+              else d+=" ";
+            }
+            System.out.print(c+"\n"+d+"\n");
+            d="║";
+          }
         }
       }
-      else if(count < error){
-        System.out.print(c+"\n"+d+"\n");
-      }
-      else if(count == error ){
-          System.out.print(c+"\n"+d+"\n"+e+"\n");
-        }
     }
-  }
   public static void main (String[] args){
-      impiccato();
+      try{
+        impiccato();
+      }
+      catch(NullPointerException e){
+        System.out.println("How about NO.");
+      }
   }
 }
