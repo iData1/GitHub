@@ -10,146 +10,147 @@ public class impiccatoC{
     clean();
     while(gameOn){
       InputStreamReader Input = new InputStreamReader (System.in);
-    	BufferedReader tastiera = new BufferedReader (Input);
-    	String word = "";
-    	System.out.print("Inserisci la parola da indovinare: ");
-    	try{
-    	  word = tastiera.readLine();
-    	}
-    	catch(IOException e){
-    	}
-    	catch(IndexOutOfBoundsException e){
-    	}
-    	catch(NullPointerException e){
-    	  System.out.println("How about NO.");
-    	  clean();
-    	}
-    	String hiddenWord = wordSecret(word.length(), '-');
+      BufferedReader tastiera = new BufferedReader (Input);
+      String word = "";
+      System.out.print("Inserisci la parola da indovinare: ");
+      try{
+        word = tastiera.readLine();
+      }
+      catch(IOException e){
+      }
+      catch(IndexOutOfBoundsException e){
+      }
+      catch(NullPointerException e){
+        System.out.println("How about NO.");
+        clean();
+      }
+      String hiddenWord = wordSecret(word.length(), '-');
       int volte = 0, lifes = 7, again = 0, volteTrue = 0, volteWrong = 0;
       String wrongAttempts = "";
       String rightAttempts = "";
       String wrongAttemptsWrite = "";
       hangedMan(7-lifes, lifes, wrongAttempts, hiddenWord);
-    	String testo ="";
+      String testo ="";
       boolean verify = false;
       int attempts = 0;
-    	try{
-    	  while(true){
-    	    clean();
-    	    hangedMan(7-lifes, lifes, wrongAttempts, hiddenWord);
-    	    if(again == 0){
-    	      again = 1;
-    	    }
-    	    else if(character == false){
-    	      System.out.println("Inserire almeno un carattere.");
-    	      character = true;
-    	    }
-    	    else if(lifes == 0){
-    	      System.out.println("Hai perso. La parola da indovinare era: \""+word+"\"");
-    	      System.out.print("Vuoi rigiocare? Y/N: ");
-      	    testo=tastiera.readLine();
-      	    if(testo.equalsIgnoreCase("N") || testo.equalsIgnoreCase("no"))return;
-      	    else if(testo.equalsIgnoreCase("Y") || testo.equalsIgnoreCase("yes")){
-      	      lifes = 7;
-      	      retry = true;
-      	      clean();
-      	      break;
-      	    }
-      	    else{ return;}
-    	    }
-    	    else if(hiddenWord.equals(word) ){
-    	      System.out.println("Bravo! Hai vinto!\nParola: \""+hiddenWord+"\"");
-    	      System.out.print("Vuoi rigiocare? Y/N: ");
-      	    testo=tastiera.readLine();
-      	    if(testo.equalsIgnoreCase("N") || testo.equalsIgnoreCase("No"))return;
-      	    else if(testo.equalsIgnoreCase("Y") || testo.equalsIgnoreCase("yes")){
-      	      lifes = 7;
-      	      retry = true;
-      	      clean();
-      	      break;
-      	    }
-        	  else{ 
-        	    System.out.println("Inserisci un carattere valido."); 
-        	  }
-    	    }
-    	    else if(characterTrue == true){
-    	      System.out.println("Hai già inserito questa lettera.");
-    	      characterTrue=false;
-    	    }
-    	    else if(verify == true){
-    	      System.out.println("Lettera corretta: \""+testo.charAt(0)+"\"");
-    	    }
-    	    else if(verify == false){
-    	      System.out.println("Lettera scorretta: \""+testo.charAt(0)+"\"");
-    	    }
-    	    System.out.print("Inserisci lettera: ");
-    	    testo = tastiera.readLine();
-    	    if(testo.length()==0 )character = false;
-    	    else if(testo.equals(word)){
-    	      System.out.println("Complimenti, hai vinto!");
-    	      System.out.print("Vuoi rigiocare? Y/N: ");
-      	    testo=tastiera.readLine();
-      	    if(testo.equalsIgnoreCase("N") || testo.equalsIgnoreCase("no"))return;
-      	    else if(testo.equalsIgnoreCase("Y") || testo.equalsIgnoreCase("yes")){
-      	      lifes = 7;
-      	      retry = true;
-      	      clean();
-      	      break;
-      	    }
-        	  else{ 
-        	    System.out.println("Inserisci un carattere valido."); 
-        	  }
-    	    }
-    	    clean();
+      try{
+        while(true){
+          clean();
+          hangedMan(7-lifes, lifes, wrongAttempts, hiddenWord);
+          if(again == 0){
+            again = 1;
+          }
+          else if(character == false){
+            System.out.println("Inserire almeno un carattere.");
+            character = true;
+          }
+          else if(lifes == 0){
+            System.out.println("Hai perso. La parola da indovinare era: \""+word+"\"");
+            System.out.print("Vuoi rigiocare? Y/N: ");
+            testo=tastiera.readLine();
+            if(testo.equalsIgnoreCase("N") || testo.equalsIgnoreCase("no"))return;
+            else if(testo.equalsIgnoreCase("Y") || testo.equalsIgnoreCase("yes")){
+              lifes = 7;
+              retry = true;
+              clean();
+              break;
+            }
+            else{ 
+              return;
+            }
+          }
+          else if(hiddenWord.equals(word) ){
+            System.out.println("Bravo! Hai vinto!\nParola: \""+hiddenWord+"\"");
+            System.out.print("Vuoi rigiocare? Y/N: ");
+            testo=tastiera.readLine();
+            if(testo.equalsIgnoreCase("N") || testo.equalsIgnoreCase("No"))return;
+            else if(testo.equalsIgnoreCase("Y") || testo.equalsIgnoreCase("yes")){
+              lifes = 7;
+              retry = true;
+              clean();
+              break;
+            }
+            else{ 
+              System.out.println("Inserisci un carattere valido."); 
+            }
+          }
+          else if(characterTrue == true){
+            System.out.println("Hai già inserito questa lettera.");
+            characterTrue=false;
+          }
+          else if(verify == true){
+            System.out.println("Lettera corretta: \""+testo.charAt(0)+"\"");
+          }
+          else if(verify == false){
+            System.out.println("Lettera scorretta: \""+testo.charAt(0)+"\"");
+          }
+          System.out.print("Inserisci lettera: ");
+          testo = tastiera.readLine();
+          if(testo.length()==0 )character = false;
+          else if(testo.equals(word)){
+            System.out.println("Complimenti, hai vinto!");
+            System.out.print("Vuoi rigiocare? Y/N: ");
+            testo=tastiera.readLine();
+            if(testo.equalsIgnoreCase("N") || testo.equalsIgnoreCase("no"))return;
+            else if(testo.equalsIgnoreCase("Y") || testo.equalsIgnoreCase("yes")){
+              lifes = 7;
+              retry = true;
+              clean();
+              break;
+            }
+            else{ 
+              System.out.println("Inserisci un carattere valido."); 
+            }
+          }
+          clean();
           volte = 0;
-    	    try{
-    	       for(int count = 0; count < rightAttempts.length(); count++ ){
-    	         if(rightAttempts.charAt(count)==testo.charAt(0)){
-    	           characterTrue=true;
-    	           break;
-    	         }
-    	       }
-    	       for(int count1=0; count1 < wrongAttemptsWrite.length(); count1++ ){
-    	        if(wrongAttemptsWrite.charAt(count1)==testo.charAt(0) ){
-    	          characterTrue=true;
-    	          break;
-    	        }
-    	       }
-    	        
-    	        if(characterTrue == false){
-        	      for(int count = 0; count < word.length(); count++){
-        	        if(testo.charAt(0)==word.charAt(count)){
-        	          hiddenWord = newSecret(hiddenWord,count, word.charAt(count));
-                    verify = true;
-                    rightAttempts+=testo.charAt(0);
-        	        }
-        	        else{
-        	          volte++;
-        	          if(volte==word.length() && characterTrue==false){
-        	            lifes--;
-        	            verify = false;
-        	            wrongAttempts +="\""+testo.charAt(0)+"\" ";
-        	            wrongAttemptsWrite +=testo.charAt(0);
-        	            attempts++;
-        	          }
-        	        }
-        	      }
-    	        }
-    	    }
-    	    catch(NumberFormatException e){
-    	    }
-    	    catch(IndexOutOfBoundsException e){
-    	    }
-    	  }
-    	}
-    	catch(IOException e){
-    	}
-    	catch(NullPointerException e){
-    	  System.out.println("How about NO.");
-    	  clean();
-    	}
-    	catch(IndexOutOfBoundsException e){
-    	}
+          try{
+            for(int count = 0; count < rightAttempts.length(); count++ ){
+              if(rightAttempts.charAt(count)==testo.charAt(0)){
+                characterTrue=true;
+                break;
+              }
+            }
+            for(int count1=0; count1 < wrongAttemptsWrite.length(); count1++ ){
+              if(wrongAttemptsWrite.charAt(count1)==testo.charAt(0) ){
+                characterTrue=true;
+                break;
+            }
+          }
+            if(characterTrue == false){
+              for(int count = 0; count < word.length(); count++){
+                if(testo.charAt(0)==word.charAt(count)){
+                  hiddenWord = newSecret(hiddenWord,count, word.charAt(count));
+                  verify = true;
+                  rightAttempts+=testo.charAt(0);
+                }
+                else{
+                  volte++;
+                  if(volte==word.length() && characterTrue==false){
+                    lifes--;
+                    verify = false;
+                    wrongAttempts +="\""+testo.charAt(0)+"\" ";
+                    wrongAttemptsWrite +=testo.charAt(0);
+                    attempts++;
+                  }
+                }
+              }
+            }
+          }
+          catch(NumberFormatException e){
+          }
+          catch(IndexOutOfBoundsException e){
+          }
+        }
+      }
+      catch(IOException e){
+      }
+      catch(NullPointerException e){
+        System.out.println("How about NO.");
+        clean();
+      }
+      catch(IndexOutOfBoundsException e){
+      }
     }
   }
   public static String wordSecret(int a, char c){
@@ -302,10 +303,10 @@ public class impiccatoC{
     }
     else if(errors == 6){
       System.out.println(owner);
-            System.out.println(a);
-            System.out.println(b1);
-            System.out.println(c1);
-            System.out.println(d1);
+      System.out.println(a);
+      System.out.println(b1);
+      System.out.println(c1);
+      System.out.println(d1);
       for(int count = 0; count < 2; count ++){
         System.out.println(b);
       }
@@ -352,7 +353,6 @@ public class impiccatoC{
       String c = "╠════════╣";
       String d = "║";
       String e = "╚════════╝";
-      
       if(error == 0){
        System.out.print(a+"\n"+b+"\n"+e+"\n"); 
       }
@@ -368,7 +368,6 @@ public class impiccatoC{
               else d+=" ";
             }
             System.out.print(c+"\n"+d+"\n"+e+"\n");
-            
           }
           else if(count < error){
             d+=count+1+".) "+f;
