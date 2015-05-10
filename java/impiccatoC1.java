@@ -2,9 +2,10 @@
  * @author Samuel Dias da Silva
  * data: 27.04.15
  */
-
 import java.io.*;
+
 public class impiccatoC1{
+  
   public static void impiccato(){
     boolean gameOn=true, retry = false, characterTrue = false, character = true;
     clean();
@@ -38,6 +39,9 @@ public class impiccatoC1{
       int attempts = 0;
       try{
         while(true){
+          if(lifes < 0){
+            lifes = 0;
+          }
           clean();
           hangedMan(7-lifes, lifes, wrongAttempts, hiddenWord);
           if(again == 0){
@@ -70,7 +74,7 @@ public class impiccatoC1{
             clean();
             break;
           }
-          else if(hiddenWord.equals(word) ){
+          else if(hiddenWord.equals(word)){
             while(!retry){
               if(countRetry==0){
                 System.out.println("Complimenti, hai vinto!");
@@ -99,7 +103,6 @@ public class impiccatoC1{
           }
           else if(verify == true){
             System.out.println("Lettera/e corretta/e: "+right);
-            
           }
           else if(verify == false){
             System.out.println("Lettera/e scorretta/e: "+lettere);
@@ -132,9 +135,10 @@ public class impiccatoC1{
             clean();
             break;
           }
-          
           try{
             for(int count2 = 0; count2 < testo.length(); count2++ ){
+              if(lifes == 0) break;
+              else if(testo.charAt(count2)==' ')continue;
               volte=0;
               for(int count = 0; count < rightAttempts.length(); count++ ){
                 if(rightAttempts.charAt(count)==testo.charAt(count2)){
@@ -157,7 +161,6 @@ public class impiccatoC1{
                   hiddenWord = newSecret(hiddenWord,count, word.charAt(count));
                   verify = true;
                   rightAttempts+=testo.charAt(count2);
-                  //lettere+=testo.charAt(count2);
                   right+="\""+testo.charAt(count2)+"\""+" ";
                 }
                 else{
@@ -217,7 +220,6 @@ public class impiccatoC1{
   public static void hangedMan(int errors,int attempts, String error, String testo){
     String a ="╔═════════════════════════════════════════════════════════════════════╗";
     String b ="║                                                                     ║";
-    //String b1 ="║Impiccato creato da: Samuel e Alessandro                             ║";
     String b1 ="║Lettere sbagliate: "+error;
     String c1 ="║Parola attuale: "+testo;
     String d1 ="║Vite: "+attempts;
@@ -357,7 +359,8 @@ public class impiccatoC1{
       System.out.println(q1);
       System.out.println(r);
     }
-    else if ( errors == 7 ){
+    else if ( errors >= 7 ){
+      
       System.out.println(owner);
       System.out.println(a);
       System.out.println(b1);
